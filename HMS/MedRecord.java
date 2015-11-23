@@ -10,10 +10,10 @@ public class MedRecord {
 
   public MedRecord(int patientId) {
     this.patientId = patientId;
-    report = new PatReport();
-    caseInfo = new MedCaseInfo();
-    adminInfo = new AdminInfo();
-    internalInfo = new InternalInfo();
+    report = null;
+    caseInfo = null;
+    adminInfo = null;
+    internalInfo = null;
   }
 
   public PatReport getPatReport() {

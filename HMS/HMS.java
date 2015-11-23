@@ -2,8 +2,6 @@ package HMS;
 
 import java.util.HashMap;
 import java.util.Map;
-//import java.util.Iterator;
-//import java.util.Set;
 
 public class HMS {
 
@@ -52,6 +50,50 @@ public class HMS {
 
   //For testing purposes only
   public static void main(String [] args) {
+
+    // Criar o sistema HMS
+    HMS HMS = new HMS();
+
+    // Tentar encontrar o Record do paciente 1337
+    MedRecord pat1337 = HMS.findRecord(1337);
+
+    // Se nao existir, vamos criar
+    if (pat1337 == null) pat1337 = HMS.createNewRecord(1337);
+
+    // Tentar encontrar o PatReport do paciente 1337
+    // Se nao existir, vamos criar
+    if (pat1337.getPatReport() == null) {
+      PatReport p = new PatReport("Manel Carlos",0,69,123456789);
+      HMS.updatePatReport(pat1337, p);
+    }
+
+    // Tentar encontrar o MedCaseInfo do paciente 1337
+    // Se nao existir, vamos criar
+    if (pat1337.getMedCaseInfo() == null) {
+      MedCaseInfo p = new MedCaseInfo("Laringite");
+      HMS.updateMedCaseInfo(pat1337, p);
+    }
+
+    // Tentar encontrar o AdminInfo do paciente 1337
+    // Se nao existir, vamos criar
+    if (pat1337.getAdminInfo() == null) {
+      AdminInfo p = new AdminInfo();
+      HMS.updateAdminInfo(pat1337, p);
+    }
+
+    // Tentar encontrar o InternalInfo do paciente 1337
+    // Se nao existir, vamos criar
+    if (pat1337.getInternalInfo() == null) {
+      InternalInfo p = new InternalInfo();
+      HMS.updateInternalInfo(pat1337, p);
+    }
+
+    // Correr as estatisticas do sistema
+    HMS.runStatistics();
+    //IndicatorValue stat = HMS.getStatisticsIndicator();
+
+    // Imprimir essas estatisticas
+
 
     System.out.println("YOYOYOY");
 
