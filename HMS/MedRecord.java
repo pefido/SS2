@@ -16,6 +16,10 @@ public class MedRecord {
     internalInfo = null;
   }
 
+  public int getPatientId() {
+    return patientId;
+  }
+
   public PatReport getPatReport() {
     return report;
   }
