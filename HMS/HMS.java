@@ -55,10 +55,10 @@ public class HMS {
     pstmt.executeUpdate();
     pstmt.close();
     // Criar os indicatores
-    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (1, 0, 'Income')"); pstmt.executeUpdate(); pstmt.close();
-    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (2, 0, 'Expense')"); pstmt.executeUpdate(); pstmt.close();
-    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (3, 0, 'Total Patients')"); pstmt.executeUpdate(); pstmt.close();
-    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (4, 0, 'Elders')"); pstmt.executeUpdate(); pstmt.close();
+    pstmt = c.prepareStatement("INSERT OR REPLACE into statistics values (1, 0, 'Income')"); pstmt.executeUpdate(); pstmt.close();
+    pstmt = c.prepareStatement("INSERT OR REPLACE into statistics values (2, 0, 'Expense')"); pstmt.executeUpdate(); pstmt.close();
+    pstmt = c.prepareStatement("INSERT OR REPLACE into statistics values (3, 0, 'Total Patients')"); pstmt.executeUpdate(); pstmt.close();
+    pstmt = c.prepareStatement("INSERT OR REPLACE into statistics values (4, 0, 'Elders')"); pstmt.executeUpdate(); pstmt.close();
     c.close();
   }
 

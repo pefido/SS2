@@ -6,7 +6,7 @@ public class IndicatorValue {
   int value;
   String name;
 
-  public PatReport(int id, int value, String name) {
+  public IndicatorValue(int id, int value, String name) {
     this.id = id;
     this.value = value;
     this.name = name;
