@@ -35,13 +35,16 @@ public class HMS {
     //Create table AdminInfo
     pstmt = c.prepareStatement(
         "CREATE TABLE IF NOT EXISTS admininfo "
-        + "(ID INT PRIMARY KEY NOT NULL)");
+        + "(ID INT PRIMARY KEY NOT NULL,"
+        + " COMPLAINT BOOLEAN NOT NULL)");
     pstmt.executeUpdate();
     pstmt.close();
     // Create InternalInfo
     pstmt = c.prepareStatement(
         "CREATE TABLE IF NOT EXISTS internalinfo "
-        + "(ID INT PRIMARY KEY NOT NULL)");
+        + "(ID INT PRIMARY KEY NOT NULL,"
+        + "EXPENSE INT NOT NULL,"
+        + "INCOME INT NOT NULL)");
     pstmt.executeUpdate();
     pstmt.close();
     pstmt = c.prepareStatement(
@@ -92,16 +95,19 @@ public class HMS {
     // Get and save AdminInfo
     AdminInfo adm = m.getAdminInfo();
     if (adm != null) {
-      PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into admininfo values (?)");
+      PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into admininfo values (?, ?)");
       patst.setInt(1, patientId);
+      patst.setBoolean(2, adm.getComplaint());
       patst.executeUpdate();
       patst.close();
     }
     // Get and save InternalInfo
     InternalInfo inf = m.getInternalInfo();
     if (inf != null) {
-      PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into internalinfo values (?)");
+      PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into internalinfo values (?, ?, ?)");
       patst.setInt(1, patientId);
+      patst.setInt(2, inf.getExpense());
+      patst.setInt(3, inf.getIncome());
       patst.executeUpdate();
       patst.close();
     }
@@ -151,7 +157,7 @@ public class HMS {
       tmp = pstmt.executeQuery();
       AdminInfo admininfo = null;
       while(tmp.next()) {
-        admininfo = new AdminInfo();
+        admininfo = new AdminInfo(tmp.getBoolean(2));
         record.setAdminInfo(admininfo);
       }
       pstmt.close();
@@ -161,7 +167,7 @@ public class HMS {
       tmp = pstmt.executeQuery();
       InternalInfo internalinfo = null;
       while(tmp.next()) {
-        internalinfo = new InternalInfo();
+        internalinfo = new InternalInfo(tmp.getInt(2), tmp.getInt(3));
         record.setInternalInfo(internalinfo);
       }
       pstmt.close();
@@ -274,14 +280,14 @@ public class HMS {
     // Tentar encontrar o AdminInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getAdminInfo() == null) {
-      AdminInfo p = new AdminInfo();
+      AdminInfo p = new AdminInfo(false);
       HMS.updateAdminInfo(pat1337, p);
     }
 
     // Tentar encontrar o InternalInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getInternalInfo() == null) {
-      InternalInfo p = new InternalInfo();
+      InternalInfo p = new InternalInfo(10, 99);
       HMS.updateInternalInfo(pat1337, p);
     }
 
