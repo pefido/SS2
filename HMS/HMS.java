@@ -44,6 +44,18 @@ public class HMS {
         + "(ID INT PRIMARY KEY NOT NULL)");
     pstmt.executeUpdate();
     pstmt.close();
+    pstmt = c.prepareStatement(
+        "CREATE TABLE IF NOT EXISTS statistics "
+        + "(ID INT PRIMARY KEY NOT NULL,"
+        + " VALUE INT NOT NULL,"
+        + " NAME STRING NOT NULL)");
+    pstmt.executeUpdate();
+    pstmt.close();
+    // Criar os indicatores
+    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (1, 0, 'Income')"); pstmt.executeUpdate(); pstmt.close();
+    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (2, 0, 'Expense')"); pstmt.executeUpdate(); pstmt.close();
+    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (3, 0, 'Total Patients')"); pstmt.executeUpdate(); pstmt.close();
+    PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into statistics values (4, 0, 'Elders')"); pstmt.executeUpdate(); pstmt.close();
     c.close();
   }
 
@@ -199,11 +211,38 @@ public class HMS {
     save_rec(record);
   }
 
-  // ???
   public void runStatistics() {
+    Connection c = getCon();
+    PreparedStatement patst;
+    // Receitas
+    patst = c.prepareStatement("UPDATE set val=(SELECT sum(income) from internalinfo) where indicator=1");
+    patst.executeUpdate();
+    patst.close();
+    // Despesas
+    patst = c.prepareStatement("UPDATE set val=(SELECT sum(expense) from internalinfo) where indicator=2");
+    patst.executeUpdate();
+    patst.close();
+    // Total pacientes
+    patst = c.prepareStatement("UPDATE set val=(SELECT sum(*) from medcaseinfo) where indicator=3");
+    patst.executeUpdate();
+    patst.close();
+    // Terceira Idade
+    patst = c.prepareStatement("UPDATE set val=(SELECT sum(*) from patreport where age >= 65) where indicator=4");
+    patst.executeUpdate();
+    patst.close();
+    c.close();
   }
   public IndicatorValue getStatisticsIndicator(int StatisticsIndicatorId) {
-    return null;
+    Connection c = getCon();
+    // Get MedRecord
+    PreparedStatement pstmt = c.prepareStatement("SELECT * FROM statistics WHERE id=?");
+    pstmt.setInt(1, StatisticsIndicatorId);
+    ResultSet tmp = pstmt.executeQuery();
+    IndicatorValue value = null;
+    while(tmp.next()) { value = new IndicatorValue(tmp.getInt(1), tmp.getInt(2), tmp.getString(3)); }
+    pstmt.close();
+    c.close();
+    return value;
   }
 
   //For testing purposes only
