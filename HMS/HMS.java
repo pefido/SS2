@@ -217,28 +217,28 @@ public class HMS {
     save_rec(record);
   }
 
-  public void runStatistics() {
+  public void runStatistics() throws Exception {
     Connection c = getCon();
     PreparedStatement patst;
     // Receitas
-    patst = c.prepareStatement("UPDATE set val=(SELECT sum(income) from internalinfo) where indicator=1");
+    patst = c.prepareStatement("UPDATE statistics set value=(SELECT sum(income) from internalinfo) where id=1");
     patst.executeUpdate();
     patst.close();
     // Despesas
-    patst = c.prepareStatement("UPDATE set val=(SELECT sum(expense) from internalinfo) where indicator=2");
+    patst = c.prepareStatement("UPDATE statistics set value=(SELECT sum(expense) from internalinfo) where id=2");
     patst.executeUpdate();
     patst.close();
     // Total pacientes
-    patst = c.prepareStatement("UPDATE set val=(SELECT sum(*) from medcaseinfo) where indicator=3");
+    patst = c.prepareStatement("UPDATE statistics set value=(SELECT count(*) from medrecord) where id=3");
     patst.executeUpdate();
     patst.close();
     // Terceira Idade
-    patst = c.prepareStatement("UPDATE set val=(SELECT sum(*) from patreport where age >= 65) where indicator=4");
+    patst = c.prepareStatement("UPDATE statistics set value=(SELECT count(*) from patreport where age >= 65) where id=4");
     patst.executeUpdate();
     patst.close();
     c.close();
   }
-  public IndicatorValue getStatisticsIndicator(int StatisticsIndicatorId) {
+  public IndicatorValue getStatisticsIndicator(int StatisticsIndicatorId) throws Exception {
     Connection c = getCon();
     // Get MedRecord
     PreparedStatement pstmt = c.prepareStatement("SELECT * FROM statistics WHERE id=?");
@@ -262,6 +262,14 @@ public class HMS {
 
     // Se nao existir, vamos criar
     if (pat1337 == null) pat1337 = HMS.createNewRecord(1337);
+
+    // Tentar encontrar o Record do paciente 1337
+    MedRecord asdad = HMS.findRecord(1);
+
+    // Se nao existir, vamos criar
+    if (asdad == null) asdad = HMS.createNewRecord(1);
+      PatReport a = new PatReport("Manel josé",0,6);
+      HMS.updatePatReport(asdad, a);
 
     // Tentar encontrar o PatReport do paciente 1337
     // Se nao existir, vamos criar
