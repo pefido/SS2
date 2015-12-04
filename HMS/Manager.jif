@@ -1,0 +1,15 @@
+package jif.principals;
+
+public class Manager extends ExternalPrincipal {
+    public Manager() {
+  super("Manager");
+    }
+
+    private static Manager{*!:*} P;
+    public static Principal getInstance{*!:*}() {
+  if (P == null) {
+      P = new Manager();
+  }
+  return P;
+    }
+}

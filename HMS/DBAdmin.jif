@@ -1,0 +1,15 @@
+package jif.principals;
+
+public class DBAdmin extends ExternalPrincipal {
+    public DBAdmin() {
+  super("DBAdmin");
+    }
+
+    private static DBAdmin{*!:*} P;
+    public static Principal getInstance{*!:*}() {
+  if (P == null) {
+      P = new DBAdmin();
+  }
+  return P;
+    }
+}

@@ -1,0 +1,23 @@
+package HMS;
+
+public class PatReport{
+
+  String{Patient->} name;
+  int{Patient->} sex;
+  int{Patient->} age;
+
+  public PatReport(String{*->Patient} name, int{*->Patient} sex, int{*->Patient} age) {
+    this.name = name;
+    this.sex = sex;
+    this.age = age;
+  }
+
+  public String{Patient->} getName() { return name; }
+  public int{Patient->}    getSex()  { return sex;  }
+  public int{Patient->}    getAge()  { return age;  }
+
+  public void   setName(String{*->Patient} name) { this.name = name; }
+  public void   setSex(int{*->Patient} sex)      { this.sex = sex;   }
+  public void   setAge(int{*->Patient} age)      { this.age = age;   }
+
+}

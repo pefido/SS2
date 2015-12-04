@@ -1,0 +1,15 @@
+package jif.principals;
+
+public class Doctor extends ExternalPrincipal {
+    public Doctor() {
+  super("Doctor");
+    }
+
+    private static Doctor{*!:*} P;
+    public static Principal getInstance{*!:*}() {
+  if (P == null) {
+      P = new Doctor();
+  }
+  return P;
+    }
+}

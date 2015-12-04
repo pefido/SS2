@@ -1,0 +1,15 @@
+package jif.principals;
+
+public class Staff extends ExternalPrincipal {
+    public Staff() {
+  super("Staff");
+    }
+
+    private static Staff{*!:*} P;
+    public static Principal getInstance{*!:*}() {
+  if (P == null) {
+      P = new Staff();
+  }
+  return P;
+    }
+}
