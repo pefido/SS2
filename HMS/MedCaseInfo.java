@@ -2,7 +2,7 @@ package HMS;
 
 public class MedCaseInfo {
 
-  String disease;
+  private String disease;
 
   public MedCaseInfo(String disease) {
     this.disease = disease;

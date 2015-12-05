@@ -1,6 +1,6 @@
 package HMS;
 
-public class PatReport[label L]{
+public class PatReport[label L] {
 
   private String{L} name;
   private int{L} sex;

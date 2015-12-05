@@ -1,0 +1,28 @@
+package HMS;
+
+public class InternalInfo[label L] {
+
+  private int{L} expense;
+  private int{L} income;
+
+  public InternalInfo(int{L} expense, int{L} income){
+    this.expense = expense;
+    this.income = income;
+  }
+
+  public int{L} getExpense(){
+    return expense;
+  }
+
+  public void setExpense{L}(int{L} expense){
+    this.expense = expense;
+  }
+
+  public int{L} getIncome(){
+    return income;
+  }
+
+  public void setIncome{L}(int{L} income){
+    this.income = income;
+  }
+}

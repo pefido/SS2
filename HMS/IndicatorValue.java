@@ -2,9 +2,9 @@ package HMS;
 
 public class IndicatorValue {
 
-  int id;
-  int value;
-  String name;
+  private int id;
+  private int value;
+  private String name;
 
   public IndicatorValue(int id, int value, String name) {
     this.id = id;

@@ -1,0 +1,15 @@
+package HMS;
+
+public class MedCaseInfo[label L] {
+
+  private String{L} disease;
+
+  public MedCaseInfo(String{L} disease) {
+    this.disease = disease;
+  }
+
+  public String{L} getDisease() { return disease; }
+
+  public void   setDisease{L}(String{L} disease) { this.disease = disease; }
+
+}

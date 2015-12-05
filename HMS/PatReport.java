@@ -2,9 +2,9 @@ package HMS;
 
 public class PatReport {
 
-  String name;
-  int sex;
-  int age;
+  private String name;
+  private int sex;
+  private int age;
 
   public PatReport(String name, int sex, int age) {
     this.name = name;
