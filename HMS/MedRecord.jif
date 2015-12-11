@@ -2,13 +2,13 @@ package HMS;
 
 public class MedRecord {
 
-  private int patientId;
-  private PatReport report;
-  private MedCaseInfo caseInfo;
-  private AdminInfo adminInfo;
-  private InternalInfo internalInfo;
+  private int{_->_} patientId;
+  private PatReport{Patient->_} report;
+  private MedCaseInfo{Doctor->Manager} caseInfo;
+  private AdminInfo{Staff->Manager} adminInfo;
+  private InternalInfo{Manager->} internalInfo;
 
-  public MedRecord(int patientId) {
+  public MedRecord(int{_->_} patientId) {
     this.patientId = patientId;
     report = null;
     caseInfo = null;
@@ -16,39 +16,39 @@ public class MedRecord {
     internalInfo = null;
   }
 
-  public int getPatientId() {
+  public int{_->_} getPatientId() {
     return patientId;
   }
 
-  public PatReport getPatReport() {
+  public PatReport{Patient->_} getPatReport() {
     return report;
   }
 
-  public MedCaseInfo getMedCaseInfo() {
+  public MedCaseInfo{Doctor->Manager} getMedCaseInfo() {
     return caseInfo;
   }
 
-  public AdminInfo getAdminInfo() {
+  public AdminInfo{Staff->Manager} getAdminInfo() {
     return adminInfo;
   }
 
-  public InternalInfo getInternalInfo() {
+  public InternalInfo{Manager->} getInternalInfo() {
     return internalInfo;
   }
 
-  public void setReport(PatReport report) {
+  public void setReport{Patient->_}(PatReport{Patient->_} report) {
     this.report = report;
   }
 
-  public void setCaseInfo(MedCaseInfo info) {
+  public void setCaseInfo{Doctor->Manager}(MedCaseInfo{Doctor->Manager} info) {
     caseInfo = info;
   }
 
-  public void setAdminInfo(AdminInfo info) {
+  public void setAdminInfo{Staff->Manager}(AdminInfo{Staff->Manager} info) {
     adminInfo = info;
   }
 
-  public void setInternalInfo(InternalInfo info) {
+  public void setInternalInfo{Manager->}(InternalInfo{Manager->} info) {
     internalInfo = info;
   }
 

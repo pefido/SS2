@@ -1,19 +1,19 @@
 package HMS;
 
-public class IndicatorValue[label L] {
+public class IndicatorValue {
 
-  private int{L} id;
-  private int{L} value;
-  private String{L} name;
+  private int{Manager->} id;
+  private int{id} value;
+  private String{id} name;
 
-  public IndicatorValue(int{L} id, int{L} value, String{L} name) {
+  public IndicatorValue(int{_->_} id, int{_->_} value, String{_->_} name) {
     this.id = id;
     this.value = value;
     this.name = name;
   }
 
-  public int{L}    getId()    { return id;     }
-  public int{L}    getValue() { return value;  }
-  public String{L} getName()  { return name;   }
+  public int{Manager->}    getId()    { return id;     }
+  public int{Manager->}    getValue() { return value;  }
+  public String{Manager->} getName()  { return name;   }
 
 }

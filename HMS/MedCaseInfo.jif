@@ -1,15 +1,15 @@
 package HMS;
 
-public class MedCaseInfo[label L] {
+public class MedCaseInfo {
 
-  private String{L} disease;
+  private String{Doctor->Manager} disease;
 
-  public MedCaseInfo(String{L} disease) {
+  public MedCaseInfo(String{_->_} disease) {
     this.disease = disease;
   }
 
-  public String{L} getDisease() { return disease; }
+  public String{Doctor->Manager} getDisease() { return disease; }
 
-  public void   setDisease{L}(String{L} disease) { this.disease = disease; }
+  public void   setDisease{Doctor->Manager}(String{_->_} disease) { this.disease = disease; }
 
 }

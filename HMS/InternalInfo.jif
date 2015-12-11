@@ -1,28 +1,28 @@
 package HMS;
 
-public class InternalInfo[label L] {
+public class InternalInfo {
 
-  private int{L} expense;
-  private int{L} income;
+  private int{Manager->} expense;
+  private int{Manager->} income;
 
-  public InternalInfo(int{L} expense, int{L} income){
+  public InternalInfo(int{_->_} expense, int{_->_} income){
     this.expense = expense;
     this.income = income;
   }
 
-  public int{L} getExpense(){
+  public int{Manager->} getExpense(){
     return expense;
   }
 
-  public void setExpense{L}(int{L} expense){
+  public void setExpense{Manager->}(int{_->_} expense){
     this.expense = expense;
   }
 
-  public int{L} getIncome(){
+  public int{Manager->} getIncome(){
     return income;
   }
 
-  public void setIncome{L}(int{L} income){
+  public void setIncome{Manager->}(int{_->_} income){
     this.income = income;
   }
 }

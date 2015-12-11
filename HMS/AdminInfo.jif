@@ -1,18 +1,18 @@
 package HMS;
 
-public class AdminInfo[label L] {
+public class AdminInfo {
 
-  private boolean{L} complaint;
+  private boolean{Staff->Manager} complaint;
 
-  public AdminInfo(boolean{L} complaint){
+  public AdminInfo(boolean{_->_} complaint){
     this.complaint = complaint;
   }
 
-  public boolean{L} getComplaint(){
+  public boolean{Staff->Manager} getComplaint(){
     return complaint;
   }
 
-  public void setComplaint{L}(boolean{L} complaint){
+  public void setComplaint{Staff->Manager}(boolean{_->_} complaint){
     this.complaint = complaint;
   }
 }

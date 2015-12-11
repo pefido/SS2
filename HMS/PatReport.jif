@@ -1,23 +1,23 @@
 package HMS;
 
-public class PatReport[label L] {
+public class PatReport {
 
-  private String{L} name;
-  private int{L} sex;
-  private int{L} age;
+  private String{Patient->_} name;
+  private int{name} sex;
+  private int{name} age;
 
-  public PatReport(String{L} name, int{L} sex, int{L} age) {
+  public PatReport(String{_->_} name, int{_->_} sex, int{_->_} age) {
     this.name = name;
     this.sex = sex;
     this.age = age;
   }
 
-  public String{L} getName() { return name; }
-  public int{L}    getSex()  { return sex;  }
-  public int{L}    getAge()  { return age;  }
+  public String{Patient->_} getName() { return name; }
+  public int{Patient->_}    getSex()  { return sex;  }
+  public int{Patient->_}    getAge()  { return age;  }
 
-  public void   setName{L}(String{L} name) { this.name = name; }
-  public void   setSex{L}(int{L} sex)      { this.sex = sex;   }
-  public void   setAge{L}(int{L} age)      { this.age = age;   }
+  public void   setName{Patient -> _}(String{_->_} name) { this.name = name; }
+  public void   setSex{Patient -> _}(int{_->_} sex)      { this.sex = sex;   }
+  public void   setAge{Patient -> _}(int{_->_} age)      { this.age = age;   }
 
 }
