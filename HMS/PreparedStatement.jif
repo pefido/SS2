@@ -1,0 +1,17 @@
+package java.sql;
+
+public interface PreparedStatement {
+
+  int executeUpdate();
+
+  void setInt(int parameterIndex, int x);
+
+  void setString(int parameterIndex, String x);
+
+  void setBoolean(int parameterIndex, boolean x);
+
+  ResultSet executeQuery();
+
+  void close();
+
+}

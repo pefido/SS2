@@ -1,0 +1,11 @@
+package java.sql;
+
+public interface Statement {
+
+boolean	execute(String sql);
+
+ResultSet	executeQuery(String sql);
+
+void close();
+
+}

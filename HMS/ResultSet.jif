@@ -1,0 +1,96 @@
+package java.sql;
+
+public interface ResultSet {
+
+boolean	absolute(int row);
+
+void	afterLast();
+
+void	beforeFirst();
+
+void	cancelRowUpdates();
+
+void	clearWarnings();
+
+void	close();
+
+void	deleteRow();
+
+int	findColumn(String columnLabel);
+
+boolean	first();
+
+boolean	getBoolean(int columnIndex);
+
+boolean	getBoolean(String columnLabel);
+
+byte	getByte(int columnIndex);
+
+byte	getByte(String columnLabel);
+
+byte[]	getBytes(int columnIndex);
+
+byte[]	getBytes(String columnLabel);
+
+int	getConcurrency();
+
+String	getCursorName();
+
+double	getDouble(int columnIndex);
+
+double	getDouble(String columnLabel);
+
+int	getFetchDirection();
+
+int	getFetchSize();
+
+float	getFloat(int columnIndex);
+
+float	getFloat(String columnLabel);
+
+int	getHoldability();
+
+int	getInt(int columnIndex);
+
+int	getInt(String columnLabel);
+
+long	getLong(int columnIndex);
+
+long	getLong(String columnLabel);
+
+String	getNString(int columnIndex);
+
+String	getNString(String columnLabel);
+
+Object	getObject(int columnIndex);
+
+int	getRow();
+
+short	getShort(int columnIndex);
+
+short	getShort(String columnLabel);
+
+String	getString(int columnIndex);
+
+String	getString(String columnLabel);
+
+boolean	isFirst();
+
+boolean	isLast();
+
+boolean	last();
+
+void	moveToCurrentRow();
+
+void	moveToInsertRow();
+
+boolean	next();
+
+boolean	previous();
+
+void	refreshRow();
+
+boolean	relative(int rows);
+
+
+}

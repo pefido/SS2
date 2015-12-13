@@ -14,3 +14,9 @@ Correr
 ```bash
 java -cp ".:sqlite-jdbc-3.8.11.2.jar" HMS.HMS
 ```
+
+Para compilar interfaces do java.sql
+
+```bash
+~/.jif-3.4.3/bin/jifc -d jif-classes -addsigcp sig-classes/ ResultSet.jif Statement.jif PreparedStatement.jif Connection.jif DriverManager.jif
+```

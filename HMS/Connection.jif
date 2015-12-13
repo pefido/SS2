@@ -1,0 +1,11 @@
+package java.sql;
+
+public interface Connection {
+
+  Statement createStatement();
+
+  PreparedStatement prepareStatement(String sql);
+
+  void close();
+
+}

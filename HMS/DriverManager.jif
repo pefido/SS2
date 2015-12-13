@@ -1,0 +1,10 @@
+package java.sql;
+
+public final class DriverManager extends java.lang.Object {
+
+    private static int __JIF_SIG_OF_JAVA_CLASS$20030619 = 0;
+
+static public native Connection	getConnection(String url);
+
+
+}
