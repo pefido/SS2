@@ -1,14 +1,10 @@
 package HMS;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class HMS {
+public class HMSystem {
 
-  public HMS() throws Exception {
+  public HMSystem() throws Exception {
     Connection c = getCon();
     //Create table MedRecord
     PreparedStatement pstmt = c.prepareStatement(
@@ -64,11 +60,12 @@ public class HMS {
 
   private Connection getCon() throws Exception {
     Class.forName("org.sqlite.JDBC");
-    DriverManager.registerDriver(new org.sqlite.JDBC());
+    //DriverManager.registerDriver(new org.sqlite.JDBC());
     return DriverManager.getConnection("jdbc:sqlite:SSfim.db");
   }
-
-  private void save_rec(MedRecord m) throws Exception {
+/*
+  private void save_rec(MedRecord m) {
+    try{
     Connection c = getCon();
     // Get patientId
     int patientId = m.getPatientId();
@@ -117,6 +114,7 @@ public class HMS {
     patst.executeUpdate();
     patst.close();
     c.close();
+    } catch (Exception e) {}
   }
 
   private MedRecord get_rec(int patientId) throws Exception {
@@ -250,64 +248,64 @@ public class HMS {
     c.close();
     return value;
   }
-
+*/
   //For testing purposes only
   public static void main(String [] args) throws Exception {
 
-    // Criar o sistema HMS
-    HMS HMS = new HMS();
-
+    // Criar o sistema HMSystem
+    HMSystem hms = new HMSystem();
+/*
     // Tentar encontrar o Record do paciente 1337
-    MedRecord pat1337 = HMS.findRecord(1337);
+    MedRecord pat1337 = hms.findRecord(1337);
 
     // Se nao existir, vamos criar
-    if (pat1337 == null) pat1337 = HMS.createNewRecord(1337);
+    if (pat1337 == null) pat1337 = hms.createNewRecord(1337);
 
     // Tentar encontrar o Record do paciente 1337
-    MedRecord asdad = HMS.findRecord(1);
+    MedRecord asdad = hms.findRecord(1);
 
     // Se nao existir, vamos criar
-    if (asdad == null) asdad = HMS.createNewRecord(1);
+    if (asdad == null) asdad = hms.createNewRecord(1);
       PatReport a = new PatReport("Manel josé",0,6);
-      HMS.updatePatReport(asdad, a);
+      hms.updatePatReport(asdad, a);
 
     // Tentar encontrar o PatReport do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getPatReport() == null) {
       PatReport p = new PatReport("Manel Carlos",0,69);
-      HMS.updatePatReport(pat1337, p);
+      hms.updatePatReport(pat1337, p);
     }
 
     // Tentar encontrar o MedCaseInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getMedCaseInfo() == null) {
       MedCaseInfo p = new MedCaseInfo("Laringite");
-      HMS.updateMedCaseInfo(pat1337, p);
+      hms.updateMedCaseInfo(pat1337, p);
     }
 
     // Tentar encontrar o AdminInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getAdminInfo() == null) {
       AdminInfo p = new AdminInfo(false);
-      HMS.updateAdminInfo(pat1337, p);
+      hms.updateAdminInfo(pat1337, p);
     }
 
     // Tentar encontrar o InternalInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getInternalInfo() == null) {
       InternalInfo p = new InternalInfo(10, 99);
-      HMS.updateInternalInfo(pat1337, p);
+      hms.updateInternalInfo(pat1337, p);
     }
 
     // Correr as estatisticas do sistema
-    HMS.runStatistics();
-    //IndicatorValue stat = HMS.getStatisticsIndicator();
+    hms.runStatistics();
+    //IndicatorValue stat = hms.getStatisticsIndicator();
 
     // Imprimir essas estatisticas
 
 
-    System.out.println("YOYOYOY");
-
+    //System.out.println("YOYOYOY");
+*/
   }
 
 }
