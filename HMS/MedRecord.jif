@@ -20,35 +20,35 @@ public class MedRecord {
     return patientId;
   }
 
-  public PatReport{Patient->_} getPatReport() {
+  public PatReport{DBAdmin->_} getPatReport() {
     return report;
   }
 
-  public MedCaseInfo{Doctor->Manager} getMedCaseInfo() {
+  public MedCaseInfo{DBAdmin->Doctor, Manager} getMedCaseInfo() {
     return caseInfo;
   }
 
-  public AdminInfo{Staff->Manager} getAdminInfo() {
+  public AdminInfo{DBAdmin->Staff, Manager} getAdminInfo() {
     return adminInfo;
   }
 
-  public InternalInfo{Manager->} getInternalInfo() {
+  public InternalInfo{DBAdmin->Manager} getInternalInfo() {
     return internalInfo;
   }
 
-  public void setReport{Patient->_}(PatReport{Patient->_} report) {
+  public void setReport{DBAdmin->_}(PatReport{Patient->_} report) {
     this.report = report;
   }
 
-  public void setCaseInfo{Doctor->Manager}(MedCaseInfo{Doctor->Manager} info) {
+  public void setCaseInfo{DBAdmin->Doctor, Manager}(MedCaseInfo{DBAdmin->Doctor, Manager} info) {
     caseInfo = info;
   }
 
-  public void setAdminInfo{Staff->Manager}(AdminInfo{Staff->Manager} info) {
+  public void setAdminInfo{DBAdmin->Staff, Manager}(AdminInfo{DBAdmin->Staff, Manager} info) {
     adminInfo = info;
   }
 
-  public void setInternalInfo{Manager->}(InternalInfo{Manager->} info) {
+  public void setInternalInfo{DBAdmin->Manager}(InternalInfo{DBAdmin->Manager} info) {
     internalInfo = info;
   }
 

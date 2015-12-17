@@ -2,14 +2,14 @@ package HMS;
 
 public class MedCaseInfo {
 
-  private String{Doctor->Manager} disease;
+  private String{DBAdmin->Doctor, Manager} disease;
 
-  public MedCaseInfo(String{_->_} disease) {
+  public MedCaseInfo(String{DBAdmin->Doctor, Manager} disease) {
     this.disease = disease;
   }
 
-  public String{Doctor->Manager} getDisease() { return disease; }
+  public String{DBAdmin->Doctor, Manager} getDisease() { return disease; }
 
-  public void   setDisease{Doctor->Manager}(String{_->_} disease) { this.disease = disease; }
+  public void   setDisease{DBAdmin->Doctor, Manager}(String{DBAdmin->Doctor, Manager} disease) { this.disease = disease; }
 
 }

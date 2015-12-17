@@ -2,18 +2,18 @@ package HMS;
 
 public class IndicatorValue {
 
-  private int{Manager->} id;
+  private int{DBAdmin->Manager} id;
   private int{id} value;
   private String{id} name;
 
-  public IndicatorValue(int{_->_} id, int{_->_} value, String{_->_} name) {
+  public IndicatorValue(int{DBAdmin->Manager} id, int{DBAdmin->Manager} value, String{DBAdmin->Manager} name) {
     this.id = id;
     this.value = value;
     this.name = name;
   }
 
-  public int{Manager->}    getId()    { return id;     }
-  public int{Manager->}    getValue() { return value;  }
-  public String{Manager->} getName()  { return name;   }
+  public int{DBAdmin->Manager}    getId()    { return id;     }
+  public int{DBAdmin->Manager}    getValue() { return value;  }
+  public String{DBAdmin->Manager} getName()  { return name;   }
 
 }

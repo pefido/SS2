@@ -2,22 +2,22 @@ package HMS;
 
 public class PatReport {
 
-  private String{Patient->_} name;
+  private String{DBAdmin->_} name;
   private int{name} sex;
   private int{name} age;
 
-  public PatReport(String{_->_} name, int{_->_} sex, int{_->_} age) {
+  public PatReport(String{DBAdmin->_} name, int{DBAdmin->_} sex, int{DBAdmin->_} age) {
     this.name = name;
     this.sex = sex;
     this.age = age;
   }
 
-  public String{Patient->_} getName() { return name; }
-  public int{Patient->_}    getSex()  { return sex;  }
-  public int{Patient->_}    getAge()  { return age;  }
+  public String{DBAdmin->_} getName() { return name; }
+  public int{DBAdmin->_}    getSex()  { return sex;  }
+  public int{DBAdmin->_}    getAge()  { return age;  }
 
-  public void   setName{Patient -> _}(String{_->_} name) { this.name = name; }
-  public void   setSex{Patient -> _}(int{_->_} sex)      { this.sex = sex;   }
-  public void   setAge{Patient -> _}(int{_->_} age)      { this.age = age;   }
+  public void   setName{DBAdmin -> _}(String{DBAdmin->_} name) { this.name = name; }
+  public void   setSex{DBAdmin -> _}(int{DBAdmin->_} sex)      { this.sex = sex;   }
+  public void   setAge{DBAdmin -> _}(int{DBAdmin->_} age)      { this.age = age;   }
 
 }
