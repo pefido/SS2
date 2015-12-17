@@ -2,27 +2,27 @@ package HMS;
 
 public class InternalInfo {
 
-  private int{Manager->} expense;
-  private int{Manager->} income;
+  private int{DBAdmin->Manager} expense;
+  private int{DBAdmin->Manager} income;
 
-  public InternalInfo(int{_->_} expense, int{_->_} income){
+  public InternalInfo(int{DBAdmin->Manager} expense, int{DBAdmin->Manager} income){
     this.expense = expense;
     this.income = income;
   }
 
-  public int{Manager->} getExpense(){
+  public int{DBAdmin->Manager} getExpense(){
     return expense;
   }
 
-  public void setExpense{Manager->}(int{_->_} expense){
+  public void setExpense{DBAdmin->Manager}(int{DBAdmin->Manager} expense){
     this.expense = expense;
   }
 
-  public int{Manager->} getIncome(){
+  public int{DBAdmin->Manager} getIncome(){
     return income;
   }
 
-  public void setIncome{Manager->}(int{_->_} income){
+  public void setIncome{DBAdmin->Manager}(int{DBAdmin->Manager} income){
     this.income = income;
   }
 }

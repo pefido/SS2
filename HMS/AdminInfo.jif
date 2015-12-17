@@ -2,17 +2,17 @@ package HMS;
 
 public class AdminInfo {
 
-  private boolean{Staff->Manager} complaint;
+  private boolean{DBAdmin->Staff, Manager} complaint;
 
-  public AdminInfo(boolean{Staff->Manager, DBAdmin} complaint){
+  public AdminInfo(boolean{DBAdmin->Staff, Manager} complaint){
     this.complaint = complaint;
   }
 
-  public boolean{Staff->Manager} getComplaint(){
+  public boolean{DBAdmin->Staff, Manager} getComplaint(){
     return complaint;
   }
 
-  public void setComplaint{Staff->Manager}(boolean{_->_} complaint){
+  public void setComplaint{DBAdmin->Staff, Manager}(boolean{DBAdmin->_} complaint){
     this.complaint = complaint;
   }
 }
