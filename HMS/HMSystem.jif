@@ -60,19 +60,19 @@ public class HMSystem authority(DBAdmin) {
     } catch (Exception e) {}
   }
 
-  private Connection{DBAdmin->_} getCon() throws Exception {
+  private Connection getCon() throws Exception {
     Class.forName("org.sqlite.JDBC");
     //DriverManager.registerDriver(new org.sqlite.JDBC());
     return DriverManager.getConnection("jdbc:sqlite:SSfim.db");
   }
-/*
-  private void save_rec(MedRecord m) {
+
+  private void save_rec{DBAdmin->_}(MedRecord{DBAdmin->_} m) {
     try{
     Connection c = getCon();
     // Get patientId
     int patientId = m.getPatientId();
     // Get and save patReport
-    PatReport pat = m.getPatReport();
+    PatReport{DBAdmin->_} pat = m.getPatReport();
     if (pat != null) {
       PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into patreport values (?, ?, ?, ?)");
       patst.setInt(1, patientId);
@@ -83,7 +83,7 @@ public class HMSystem authority(DBAdmin) {
       patst.close();
     }
     // Get and save MedCaseInfo
-    MedCaseInfo med = m.getMedCaseInfo();
+    MedCaseInfo{DBAdmin->Doctor, Manager} med = m.getMedCaseInfo();
     if (med != null) {
       PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into medcaseinfo values (?, ?)");
       patst.setInt(1, patientId);
@@ -92,7 +92,7 @@ public class HMSystem authority(DBAdmin) {
       patst.close();
     }
     // Get and save AdminInfo
-    AdminInfo adm = m.getAdminInfo();
+    AdminInfo{DBAdmin->Staff, Manager} adm = m.getAdminInfo();
     if (adm != null) {
       PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into admininfo values (?, ?)");
       patst.setInt(1, patientId);
@@ -101,7 +101,7 @@ public class HMSystem authority(DBAdmin) {
       patst.close();
     }
     // Get and save InternalInfo
-    InternalInfo inf = m.getInternalInfo();
+    InternalInfo{DBAdmin->Manager} inf = m.getInternalInfo();
     if (inf != null) {
       PreparedStatement patst = c.prepareStatement("INSERT OR REPLACE into internalinfo values (?, ?, ?)");
       patst.setInt(1, patientId);
@@ -118,20 +118,17 @@ public class HMSystem authority(DBAdmin) {
     c.close();
     } catch (Exception e) {}
   }
-  */
 
-  private MedRecord{DBAdmin->_} get_rec(int{DBAdmin->_} patientId) throws Exception where authority(DBAdmin){
+  private MedRecord{DBAdmin->_} get_rec{DBAdmin->_}(int{DBAdmin->_} patientId) throws Exception where authority(DBAdmin){
+    try{
     Connection c = getCon();
     // Get MedRecord
     PreparedStatement pstmt = c.prepareStatement("SELECT * FROM medrecord WHERE id=?");
     pstmt.setInt(1, patientId);
     ResultSet tmp = pstmt.executeQuery();
-    MedRecord{DBAdmin->_; DBAdmin<-_} record = null;
+    MedRecord{DBAdmin->_} record = null;
     while(tmp.next()) {
-      endorse({DBAdmin->_; DBAdmin<-_}){
-      int{DBAdmin->_; DBAdmin<-_} pId = endorse(tmp.getInt(1), {DBAdmin<-_});
-      record = new MedRecord(pId);
-      }
+      record = new MedRecord(tmp.getInt(1));
     }
     pstmt.close();
     if(record != null) {
@@ -139,7 +136,7 @@ public class HMSystem authority(DBAdmin) {
       pstmt = c.prepareStatement("SELECT * FROM patreport WHERE id=?");
       pstmt.setInt(1, patientId);
         tmp = pstmt.executeQuery();
-      PatReport{Patient->_} report = null;
+      PatReport{DBAdmin->_} report = null;
       while(tmp.next()) {
         //create patreport
         report = new PatReport(tmp.getString(2), tmp.getInt(3), tmp.getInt(4));
@@ -150,7 +147,7 @@ public class HMSystem authority(DBAdmin) {
       pstmt = c.prepareStatement("SELECT * FROM medcaseinfo WHERE id=?");
       pstmt.setInt(1, patientId);
       tmp = pstmt.executeQuery();
-      MedCaseInfo{Doctor->Manager} caseinfo = null;
+      MedCaseInfo{DBAdmin->Doctor, Manager} caseinfo = null;
       while(tmp.next()) {
         //create medcaseinfo
         caseinfo = new MedCaseInfo(tmp.getString(2));
@@ -161,7 +158,7 @@ public class HMSystem authority(DBAdmin) {
       pstmt = c.prepareStatement("SELECT * FROM admininfo WHERE id=?");
       pstmt.setInt(1, patientId);
       tmp = pstmt.executeQuery();
-      AdminInfo{Staff->Manager} admininfo = null;
+      AdminInfo{DBAdmin->Staff, Manager} admininfo = null;
       while(tmp.next()) {
         admininfo = new AdminInfo(tmp.getBoolean(2));
         record.setAdminInfo(admininfo);
@@ -171,7 +168,7 @@ public class HMSystem authority(DBAdmin) {
       pstmt = c.prepareStatement("SELECT * FROM internalinfo WHERE id=?");
       pstmt.setInt(1, patientId);
       tmp = pstmt.executeQuery();
-      InternalInfo{Manager->} internalinfo = null;
+      InternalInfo{DBAdmin->Manager} internalinfo = null;
       while(tmp.next()) {
         internalinfo = new InternalInfo(tmp.getInt(2), tmp.getInt(3));
         record.setInternalInfo(internalinfo);
@@ -180,19 +177,20 @@ public class HMSystem authority(DBAdmin) {
     }
     c.close();
     return record;
+    } catch (Exception e) {} finally {return null;}
   }
-/*
+
   //API publica
-  public MedRecord createNewRecord(int patientId) throws Exception {
-    MedRecord m = get_rec(patientId);
+  public MedRecord{DBAdmin->_} createNewRecord{DBAdmin->_}(int{DBAdmin->_} patientId) throws Exception {
+    MedRecord{DBAdmin->_} m = get_rec(patientId);
     if (m == null) {
       m = new MedRecord(patientId);
       save_rec(m);
     }
     return m;
   }
-  */
-  public MedRecord{DBAdmin->_} findRecord(int{DBAdmin->_} patientId) throws Exception where authority(DBAdmin){
+  
+  public MedRecord{DBAdmin->_} findRecord{DBAdmin->_}(int{DBAdmin->_} patientId) throws Exception where authority(DBAdmin){
     return get_rec(patientId);
   }
   /*
@@ -208,24 +206,41 @@ public class HMSystem authority(DBAdmin) {
   public InternalInfo getInternalInfo(MedRecord record) throws Exception {
     return record.getInternalInfo();
   }
-  public void updatePatReport(MedRecord record, PatReport report) throws Exception {
+  */
+  public void updatePatReport{DBAdmin->_}(MedRecord{DBAdmin->_} record, PatReport{DBAdmin->_} report) {
+    try{
     record.setReport(report);
     save_rec(record);
+    } catch (Exception e) {}
   }
-  public void updateMedCaseInfo(MedRecord record, MedCaseInfo caseInfo) throws Exception {
+  public void updateMedCaseInfo{DBAdmin->Doctor, Manager}(MedRecord{DBAdmin->_} record, MedCaseInfo{DBAdmin->Doctor, Manager} caseInfo) where authority(DBAdmin){
+    try{
     record.setCaseInfo(caseInfo);
+    declassify({DBAdmin->_}){
     save_rec(record);
+    }
+    } catch (Exception e) {}
   }
-  public void updateAdminInfo(MedRecord record, AdminInfo info) throws Exception {
+  public void updateAdminInfo{DBAdmin->Staff, Manager}(MedRecord{DBAdmin->_} record, AdminInfo{DBAdmin->Staff, Manager} info) where authority(DBAdmin){
+    try{
     record.setAdminInfo(info);
+    declassify({DBAdmin->_}){
     save_rec(record);
-  }
-  public void updateInternalInfo(MedRecord record, InternalInfo info) throws Exception {
-    record.setInternalInfo(info);
-    save_rec(record);
+    }
+    } catch (Exception e) {}
   }
 
-  public void runStatistics() throws Exception {
+  public void updateInternalInfo{DBAdmin->Manager}(MedRecord{DBAdmin->_} record, InternalInfo{DBAdmin->Manager} info) where authority(DBAdmin){
+    try{
+    record.setInternalInfo(info);
+    declassify({DBAdmin->_}){
+    save_rec(record);
+    }
+    } catch (Exception e) {}
+  }
+
+  public void runStatistics{DBAdmin->Manager}() {
+    try{
     Connection c = getCon();
     PreparedStatement patst;
     // Receitas
@@ -245,29 +260,34 @@ public class HMSystem authority(DBAdmin) {
     patst.executeUpdate();
     patst.close();
     c.close();
+    } catch (Exception e) {}
   }
-  public IndicatorValue getStatisticsIndicator(int StatisticsIndicatorId) throws Exception {
+
+  public IndicatorValue{DBAdmin->Manager} getStatisticsIndicator{DBAdmin->Manager}(int{DBAdmin->Manager} StatisticsIndicatorId) {
+    try{
     Connection c = getCon();
     // Get MedRecord
     PreparedStatement pstmt = c.prepareStatement("SELECT * FROM statistics WHERE id=?");
     pstmt.setInt(1, StatisticsIndicatorId);
     ResultSet tmp = pstmt.executeQuery();
-    IndicatorValue value = null;
+    IndicatorValue{DBAdmin->Manager} value = null;
     while(tmp.next()) { value = new IndicatorValue(tmp.getInt(1), tmp.getInt(2), tmp.getString(3)); }
     pstmt.close();
     c.close();
     return value;
+    } catch (Exception e) {} finally {return null;}
   }
-*/
+
   //For testing purposes only
-  public static void main(String [] args) throws Exception {
+  public static void main{DBAdmin->_}(String [] args) where authority(DBAdmin){
+    try{
 
     // Criar o sistema HMSystem
-    HMSystem hms = new HMSystem();
+    HMSystem{DBAdmin->_} hms = new HMSystem();
 
     // Tentar encontrar o Record do paciente 1337
-    MedRecord pat1337 = hms.findRecord(1337);
-/*
+    MedRecord{DBAdmin->_} pat1337 = hms.findRecord(1337);
+
     // Se nao existir, vamos criar
     if (pat1337 == null) pat1337 = hms.createNewRecord(1337);
 
@@ -276,46 +296,53 @@ public class HMSystem authority(DBAdmin) {
 
     // Se nao existir, vamos criar
     if (asdad == null) asdad = hms.createNewRecord(1);
-      PatReport a = new PatReport("Manel josé",0,6);
+      PatReport{DBAdmin->_} a = new PatReport("Manel josé",0,6);
       hms.updatePatReport(asdad, a);
 
     // Tentar encontrar o PatReport do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getPatReport() == null) {
-      PatReport p = new PatReport("Manel Carlos",0,69);
+      PatReport{DBAdmin->_} p = new PatReport("Manel Carlos",0,69);
       hms.updatePatReport(pat1337, p);
     }
 
     // Tentar encontrar o MedCaseInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getMedCaseInfo() == null) {
-      MedCaseInfo p = new MedCaseInfo("Laringite");
+      MedCaseInfo{DBAdmin->Doctor, Manager} p = new MedCaseInfo("Laringite");
+      declassify({DBAdmin->_}){
       hms.updateMedCaseInfo(pat1337, p);
+      }
     }
 
     // Tentar encontrar o AdminInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getAdminInfo() == null) {
-      AdminInfo p = new AdminInfo(false);
+      AdminInfo{DBAdmin->Staff, Manager} p = new AdminInfo(false);
+      declassify({DBAdmin->_}){
       hms.updateAdminInfo(pat1337, p);
+      }
     }
 
     // Tentar encontrar o InternalInfo do paciente 1337
     // Se nao existir, vamos criar
     if (pat1337.getInternalInfo() == null) {
-      InternalInfo p = new InternalInfo(10, 99);
+      InternalInfo{DBAdmin->Manager} p = new InternalInfo(10, 99);
+      declassify({DBAdmin->_}){
       hms.updateInternalInfo(pat1337, p);
+      }
     }
 
     // Correr as estatisticas do sistema
     hms.runStatistics();
-    //IndicatorValue stat = hms.getStatisticsIndicator();
+    //IndicatorValue{DBAdmin->Manager} stat = hms.getStatisticsIndicator();
 
     // Imprimir essas estatisticas
 
 
     //System.out.println("YOYOYOY");
-*/
+
+  } catch (Exception e) {}
   }
 
 }
