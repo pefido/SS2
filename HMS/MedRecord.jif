@@ -2,13 +2,13 @@ package HMS;
 
 public class MedRecord {
 
-  private int{_->_} patientId;
-  private PatReport{Patient->_} report;
-  private MedCaseInfo{Doctor->Manager} caseInfo;
-  private AdminInfo{Staff->Manager} adminInfo;
-  private InternalInfo{Manager->} internalInfo;
+  private int{DBAdmin->_} patientId;
+  private PatReport{DBAdmin->_} report;
+  private MedCaseInfo{DBAdmin->Doctor, Manager} caseInfo;
+  private AdminInfo{DBAdmin->Staff, Manager} adminInfo;
+  private InternalInfo{DBAdmin->Manager} internalInfo;
 
-  public MedRecord(int{_->_} patientId) {
+  public MedRecord(int{DBAdmin->_} patientId) {
     this.patientId = patientId;
     report = null;
     caseInfo = null;
@@ -16,7 +16,7 @@ public class MedRecord {
     internalInfo = null;
   }
 
-  public int{_->_} getPatientId() {
+  public int{DBAdmin->_} getPatientId() {
     return patientId;
   }
 

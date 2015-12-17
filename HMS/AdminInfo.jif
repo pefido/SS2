@@ -4,7 +4,7 @@ public class AdminInfo {
 
   private boolean{Staff->Manager} complaint;
 
-  public AdminInfo(boolean{_->_} complaint){
+  public AdminInfo(boolean{Staff->Manager, DBAdmin} complaint){
     this.complaint = complaint;
   }
 

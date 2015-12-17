@@ -2,9 +2,10 @@ package HMS;
 
 import java.sql.*;
 
-public class HMSystem {
+public class HMSystem authority(DBAdmin) {
 
-  public HMSystem() throws Exception {
+  public HMSystem() {
+    try{
     Connection c = getCon();
     //Create table MedRecord
     PreparedStatement pstmt = c.prepareStatement(
@@ -56,9 +57,10 @@ public class HMSystem {
     pstmt = c.prepareStatement("INSERT OR REPLACE into statistics values (3, 0, 'Total Patients')"); pstmt.executeUpdate(); pstmt.close();
     pstmt = c.prepareStatement("INSERT OR REPLACE into statistics values (4, 0, 'Elders')"); pstmt.executeUpdate(); pstmt.close();
     c.close();
+    } catch (Exception e) {}
   }
 
-  private Connection getCon() throws Exception {
+  private Connection{DBAdmin->_} getCon() throws Exception {
     Class.forName("org.sqlite.JDBC");
     //DriverManager.registerDriver(new org.sqlite.JDBC());
     return DriverManager.getConnection("jdbc:sqlite:SSfim.db");
@@ -116,22 +118,28 @@ public class HMSystem {
     c.close();
     } catch (Exception e) {}
   }
+  */
 
-  private MedRecord get_rec(int patientId) throws Exception {
+  private MedRecord{DBAdmin->_} get_rec(int{DBAdmin->_} patientId) throws Exception where authority(DBAdmin){
     Connection c = getCon();
     // Get MedRecord
     PreparedStatement pstmt = c.prepareStatement("SELECT * FROM medrecord WHERE id=?");
     pstmt.setInt(1, patientId);
     ResultSet tmp = pstmt.executeQuery();
-    MedRecord record = null;
-    while(tmp.next()) { record = new MedRecord(tmp.getInt(1)); }
+    MedRecord{DBAdmin->_; DBAdmin<-_} record = null;
+    while(tmp.next()) {
+      endorse({DBAdmin->_; DBAdmin<-_}){
+      int{DBAdmin->_; DBAdmin<-_} pId = endorse(tmp.getInt(1), {DBAdmin<-_});
+      record = new MedRecord(pId);
+      }
+    }
     pstmt.close();
     if(record != null) {
       // Get patReport
       pstmt = c.prepareStatement("SELECT * FROM patreport WHERE id=?");
       pstmt.setInt(1, patientId);
         tmp = pstmt.executeQuery();
-      PatReport report = null;
+      PatReport{Patient->_} report = null;
       while(tmp.next()) {
         //create patreport
         report = new PatReport(tmp.getString(2), tmp.getInt(3), tmp.getInt(4));
@@ -142,7 +150,7 @@ public class HMSystem {
       pstmt = c.prepareStatement("SELECT * FROM medcaseinfo WHERE id=?");
       pstmt.setInt(1, patientId);
       tmp = pstmt.executeQuery();
-      MedCaseInfo caseinfo = null;
+      MedCaseInfo{Doctor->Manager} caseinfo = null;
       while(tmp.next()) {
         //create medcaseinfo
         caseinfo = new MedCaseInfo(tmp.getString(2));
@@ -153,7 +161,7 @@ public class HMSystem {
       pstmt = c.prepareStatement("SELECT * FROM admininfo WHERE id=?");
       pstmt.setInt(1, patientId);
       tmp = pstmt.executeQuery();
-      AdminInfo admininfo = null;
+      AdminInfo{Staff->Manager} admininfo = null;
       while(tmp.next()) {
         admininfo = new AdminInfo(tmp.getBoolean(2));
         record.setAdminInfo(admininfo);
@@ -163,7 +171,7 @@ public class HMSystem {
       pstmt = c.prepareStatement("SELECT * FROM internalinfo WHERE id=?");
       pstmt.setInt(1, patientId);
       tmp = pstmt.executeQuery();
-      InternalInfo internalinfo = null;
+      InternalInfo{Manager->} internalinfo = null;
       while(tmp.next()) {
         internalinfo = new InternalInfo(tmp.getInt(2), tmp.getInt(3));
         record.setInternalInfo(internalinfo);
@@ -173,7 +181,7 @@ public class HMSystem {
     c.close();
     return record;
   }
-
+/*
   //API publica
   public MedRecord createNewRecord(int patientId) throws Exception {
     MedRecord m = get_rec(patientId);
@@ -183,9 +191,11 @@ public class HMSystem {
     }
     return m;
   }
-  public MedRecord findRecord(int patientId) throws Exception {
+  */
+  public MedRecord{DBAdmin->_} findRecord(int{DBAdmin->_} patientId) throws Exception where authority(DBAdmin){
     return get_rec(patientId);
   }
+  /*
   public PatReport getPatReport(MedRecord record) throws Exception {
     return record.getPatReport();
   }
@@ -254,10 +264,10 @@ public class HMSystem {
 
     // Criar o sistema HMSystem
     HMSystem hms = new HMSystem();
-/*
+
     // Tentar encontrar o Record do paciente 1337
     MedRecord pat1337 = hms.findRecord(1337);
-
+/*
     // Se nao existir, vamos criar
     if (pat1337 == null) pat1337 = hms.createNewRecord(1337);
 
